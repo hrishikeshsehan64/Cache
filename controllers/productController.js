@@ -1,5 +1,5 @@
-const { fetchProducts, fetchProductsById } = require('../services/productService');
-const { setCache } = require('../middleware/cache');
+const { fetchProducts, fetchProductsById, addNewProduct } = require('../services/productService');
+const { setCache, clearCache } = require('../middleware/cache');
 async function getProducts(req, res) {
     try {
         const products = await fetchProducts()
@@ -39,7 +39,16 @@ async function getProductsById(req, res) {
         res.send(err)
     } 
 }
+async function createProducts(req,res){
+    try{const product = req.body
+    const newProduct = await addNewProduct(product)
+    clearCache();
+    return res.status(201).json(newProduct)}
+    catch(err){
+        res.status(500).json({message:"Error creating product"})
+    }
+}
 
 
 
-module.exports = { getProducts, getProductsById }
+module.exports = { getProducts, getProductsById, createProducts }

@@ -25,4 +25,9 @@ function cacheMiddlewareForId(req,res,next){
     res.set('X-Cache','MISS');
     next();
 }
-module.exports = { cacheMiddleware, cacheMiddlewareForId, setCache };
+function clearCache() {
+    Object.keys(cache).forEach(key => {
+        delete cache[key];
+    });
+}
+module.exports = { cacheMiddleware, cacheMiddlewareForId, setCache, clearCache };

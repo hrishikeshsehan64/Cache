@@ -1,4 +1,4 @@
-const getProducts = require('../database/productsDB')
+const {getProducts,createProducts} = require('../database/productsDB')
 
 async function fetchProducts() {
     let products = await getProducts()
@@ -9,4 +9,9 @@ async function fetchProductsById(id) {
     return products.find(product => product.id === id)
 }
 
-module.exports = { fetchProducts, fetchProductsById };
+async function addNewProduct(){
+    let newProduct = await createProducts()
+    return newProduct
+}
+
+module.exports = { fetchProducts, fetchProductsById, addNewProduct };
